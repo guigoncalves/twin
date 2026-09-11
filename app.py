@@ -1,12 +1,18 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv(override=True)
+
+port = os.getenv("PORT") or os.getenv("GRADIO_SERVER_PORT") or "7860"
+os.environ["GRADIO_SERVER_NAME"] = "0.0.0.0"
+os.environ["GRADIO_SERVER_PORT"] = str(port)
+os.environ["GRADIO_SSR_MODE"] = "false"
+
 from openai import OpenAI
 from context import TWIN_SYSTEM_PROMPT
 from tools import tools, handle_tool_calls
 from styles import CSS, JS, EXAMPLES
-from dotenv import load_dotenv
 import gradio as gr
-
-load_dotenv(override=True)
 
 MODEL_NAME = "openai/gpt-5.4-mini"
 
@@ -32,7 +38,6 @@ def chat(message, history):
 
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT") or os.getenv("GRADIO_SERVER_PORT") or "7860")
     gr.ChatInterface(
         chat,
         examples=EXAMPLES,
@@ -44,5 +49,6 @@ if __name__ == "__main__":
         js=JS,
         theme=gr.themes.Base(),
         server_name="0.0.0.0",
-        server_port=port,
+        server_port=int(port),
+        ssr_mode=False,
     )
