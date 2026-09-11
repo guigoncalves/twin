@@ -41,8 +41,8 @@ if __name__ == "__main__":
     gr.ChatInterface(
         chat,
         examples=EXAMPLES,
-        title="Digital Twin",
-        description="Talk to my AI twin about my career",
+        title="Guigão",
+        description="Online · chat with my digital twin about career, projects, and how to get in touch",
         chatbot=gr.Chatbot(show_label=False),
     ).launch(
         css=CSS,
